@@ -116,5 +116,44 @@ def graph_generator(customer_id, graph_type, variable):
 
 """
 
+"""
+#Code Needed to Create Sigmoid Function. Does not work currently in Flask and needs to be adjusted.
+
+# Predicted probability for the test observation
+predicted_probability = predicted_probabilities
+
+# Define the sigmoid function
+def sigmoid(x):
+    return 1 / (1 + np.exp(-x))
+
+# Generate x values (a range of values from -7 to 7)
+x = np.linspace(-5, 5, 200)
+
+# Calculate the corresponding y values using the sigmoid function
+y = sigmoid(x)
+
+# Plot the sigmoid curve above 0.5 on the y-axis in red and below 0.5 in green
+plt.plot(x[y >= 0.5], y[y >= 0.5], color='red', label='Risk')
+plt.plot(x[y <= 0.5], y[y <= 0.5], color='green', label='Non-Risk')
+
+# Calculate the x-coordinate on the sigmoid curve for the given y-coordinate (predicted_probability)
+x_predicted = np.interp(predicted_probability, y, x)
+
+# Highlight the predicted probability point
+plt.scatter(x=[x_predicted], y=predicted_probability, color='blue', label='User')
+
+# Label the axes and add a legend
+plt.xlabel('Input')
+plt.ylabel('Sigmoid Output')
+plt.legend()
+
+# Show the plot
+plt.title(f'Predicted Probability ({predicted_probability:.2f})')
+plt.grid(True)
+plt.show()
+"""
+
+
+
 if __name__ == "__main__":
     app.run('127.0.0.1', 5000, debug=True)
