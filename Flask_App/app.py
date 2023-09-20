@@ -5,12 +5,19 @@ import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from keras.models import load_model
+import os
+
+# Specify the path to the directory you want to set as your local working directory
+current_working_directory = 'C:/Users/Xiaofeng/RMIT/Case Studies in Data Science/WIL Project/WIL_Project'
+
+# Change the current working directory to the specified path
+os.chdir(current_working_directory)
 
 app = Flask(__name__)
 
 # Load Customer Data and Risk Prediction Model
-data = pd.read_csv("Customer_DB.csv")
-Risk_Prediction_Model = load_model('model/Risk_Prediction_Model.h5')
+data = pd.read_csv('./Flask_App/Customer_DB.csv')                                       # change file path to better suit the current working dir
+Risk_Prediction_Model = load_model('./Flask_App/model/Risk_Prediction_Model.h5')        # change file path to better suit the current working dir
 
 def predict_risk(input_data):
     # Extract the features (excluding the 'ID' column)
@@ -81,7 +88,7 @@ def index():
         plt.title(f'Predicted Probability ({predicted_probability:.2f})')
         plt.grid(True)
 
-        save_path = './static/sigmoid_plot.png'
+        save_path = './Flask_App/static/sigmoid_plot.png'   # change file path to better suit the current working dir
         plt.savefig(save_path)
 
         return render_template(
