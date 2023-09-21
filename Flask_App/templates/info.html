@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Applicant Risk Information</title>
+</head>
+<body></body>
+<h1>Get More Info</h1>
+    
+<form method="POST">
+    <label for="cust_id">Enter Customer ID:</label>
+    <input type="number" id="cust_id" name="cust_id" required>
+    <button type="submit">See Where You Compare In The Model</button>
+    <p style="color: red; font-weight: bold;">Notice: customer ID should be an integer between 1 to 9861</p>
+</form>
+
+<p> The following visuals are based on important factors that have influenced the model's decision.</p>
+<p> You can compare your information to the distribution of attributes separated by the model's prediction </p>
+
+<img src="{{ url_for('static', filename='external_risk_estimate.png') }}" alt="Sigmoid Plot" width="400">
+<div></div>
+<img src="{{ url_for('static', filename='num_trades.png') }}" alt="Sigmoid Plot" width="400">
+<div></div>
+<img src="{{ url_for('static', filename='percent_delinquency.png') }}" alt="Sigmoid Plot" width="400">
+<div></div>
+<a href = "/">Go back to home page.</a>
+
+</body>
+</html>

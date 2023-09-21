@@ -6,9 +6,10 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from keras.models import load_model
 import os
+import seaborn as sns
 
 # Specify the path to the directory you want to set as your local working directory
-current_working_directory = 'C:/Users/Xiaofeng/RMIT/Case Studies in Data Science/WIL Project/WIL_Project'
+current_working_directory = '/Users/sam/uni/case_studies/Personal Task 1/group repo/WIL_PROJECT_CLEAN/WIL_Project/Flask_App'
 
 # Change the current working directory to the specified path
 os.chdir(current_working_directory)
@@ -16,8 +17,9 @@ os.chdir(current_working_directory)
 app = Flask(__name__)
 
 # Load Customer Data and Risk Prediction Model
-data = pd.read_csv('./Flask_App/Customer_DB.csv')                                       # change file path to better suit the current working dir
-Risk_Prediction_Model = load_model('./Flask_App/model/Risk_Prediction_Model.h5')        # change file path to better suit the current working dir
+data = pd.read_csv('Customer_DB.csv')                        
+Risk_Prediction_Model = load_model('model/Risk_Prediction_Model.h5')     
+df = pd.read_csv('Data_with_prediction_category.csv')
 
 def predict_risk(input_data):
     # Extract the features (excluding the 'ID' column)
@@ -34,9 +36,9 @@ def predict_risk(input_data):
 
     # Make a binary prediction based on the threshold
     if predicted_risk >= threshold:
-        prediction = "Risk"
+        prediction = "High-Risk"
     else:
-        prediction = "Non-Risk"
+        prediction = "Low-Risk"
     
     return predicted_risk, prediction
 
@@ -88,8 +90,9 @@ def index():
         plt.title(f'Predicted Probability ({predicted_probability:.2f})')
         plt.grid(True)
 
-        save_path = './Flask_App/static/sigmoid_plot.png'   # change file path to better suit the current working dir
+        save_path = './static/sigmoid_plot.png'   # change file path to better suit the current working dir
         plt.savefig(save_path)
+        plt.clf()
 
         return render_template(
             "index.html",
@@ -101,6 +104,50 @@ def index():
 
     return render_template("index.html")
 
+@app.route("/info", methods=["GET", "POST"])
+def two_chart():
+    if request.method == "POST":
+        customer_id = int(request.form.get("cust_id"))
+        customer_data = data[data['ID'] == customer_id]
+
+        if customer_data.empty:
+            return render_template("index.html", error="ID not found")
+
+        #external_risk_estimate
+        comp = df[df['ID'] == customer_id]
+        labels = ['High Risk', 'Low Risk', 'You']
+        sns.kdeplot(df, x = 'ExternalRiskEstimate', hue = 'Category', fill = True)
+        plt.vlines(x = comp['ExternalRiskEstimate'], ymin=0, ymax=2, color = 'red', label = 'You', linestyles=['dashed'])
+        plt.legend(labels = labels)
+        plt.xlabel('Normalised External Risk Estimate Score')
+        plt.title('Comparison of External Risk Estimate')
+        plt.savefig('./static/external_risk_estimate.png')
+        plt.show()
+        plt.clf()
+        labels = ['High Risk', 'Low Risk', 'You']
+        sns.kdeplot(df, x = 'PercentTradesNeverDelq', hue = 'Category', fill = True)
+        plt.vlines(x = comp['PercentTradesNeverDelq'], ymin=0, ymax=14, color = 'red', label = 'You', linestyles=['dashed'])
+        plt.legend(labels = labels)
+        plt.xlabel('Normalised Percent of Trades Never Delinquent')
+        plt.title('Comparison of Trade Delinquency')
+        plt.savefig('./static/percent_delinquency.png')
+        plt.clf()
+        ax = plt.subplot()
+        sns.boxplot(df, x = 'Category', y = 'NumTotalTrades')
+        plt.hlines(y = comp['NumTotalTrades'], xmin=-1, xmax=2, color = 'red', label = 'You', linestyles=['dashed'])
+        plt.legend()
+        ax.set_xticklabels(labels = ["Low Risk", "High Risk"])
+        plt.ylabel("Normalised Number of Trades")
+        plt.title('Comparison of Number of Total Trades Between Risk Groups')
+        plt.savefig('./static/num_trades.png')
+        plt.clf()
+        plt.legend()
+
+        return render_template(
+            "info.html"
+        )   # this code passing important parameters to the html template
+
+    return render_template("info.html")
 
 if __name__ == "__main__":
     app.run(debug=True)
