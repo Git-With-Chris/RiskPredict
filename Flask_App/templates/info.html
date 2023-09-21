@@ -12,19 +12,22 @@
     <label for="cust_id">Enter Customer ID:</label>
     <input type="number" id="cust_id" name="cust_id" required>
     <button type="submit">See Where You Compare In The Model</button>
-    <p style="color: red; font-weight: bold;">Notice: customer ID should be an integer between 1 to 9861</p>
+    <p style="color: blue; font-weight: bold;">Notice: customer ID should be an integer between 1 to 9861</p>
 </form>
 
 <p> The following visuals are based on important factors that have influenced the model's decision.</p>
 <p> You can compare your information to the distribution of attributes separated by the model's prediction </p>
 
-<img src="{{ url_for('static', filename='external_risk_estimate.png') }}" alt="Sigmoid Plot" style="width: 90%;">
+<img src="{{ url_for('static', filename='external_risk_estimate.png') }}" alt="Sigmoid Plot" style="width: 70%;">
 <div></div>
-<img src="{{ url_for('static', filename='num_trades.png') }}" alt="Sigmoid Plot" style="width: 90%;">
+<img src="{{ url_for('static', filename='num_trades.png') }}" alt="Sigmoid Plot" style="width: 70%;">
 <div></div>
-<img src="{{ url_for('static', filename='percent_delinquency.png') }}" alt="Sigmoid Plot" style="width: 90%;">
-<div></div>
-<a href = "/">Go back to home page.</a>
+<img src="{{ url_for('static', filename='percent_delinquency.png') }}" alt="Sigmoid Plot" style="width: 70%;">
+
+<div>
+    <a href="/" style="font-size: 24px; color: red;">Go back to the home page.</a>
+</div>
+
 
 </body>
 </html>
