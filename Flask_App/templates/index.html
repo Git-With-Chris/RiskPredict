@@ -12,7 +12,10 @@
         <label for="customer_id">Enter Customer ID:</label>
         <input type="number" id="customer_id" name="customer_id" required>
         <button type="submit">Predict</button>
-        <p style="color: red; font-weight: bold;">Notice: customer ID should be an integer between 1 to 9861</p>
+        <p style="color: blue; font-weight: bold;">Notice: customer ID should be an integer between 1 to 9861</p>
+        <label for="parameter_range">Enter Financial Parameter Range: from 1 to </label>
+        <input type="number" id="parameter_range" name="parameter_range" required>
+        <p style="color: blueviolet; font-weight: bold;">Notice: Financial Parameter Range should be an integer between 1 to 35</p>
     </form>
 
     <h2>Prediction Results:</h2>
@@ -20,7 +23,34 @@
     <p>Chance of successful repayment (Percent): {{ repayment_probability }}%</p>
     <p>Classification: {{ prediction }}</p>
 
-    <!-- Add an <img> tag to display the saved plot image -->
-    <img src="{{ url_for('static', filename='sigmoid_plot.png') }}" alt="Sigmoid Plot" width="400">
+    <!-- Add an <img> tag to display the saved plot image, the initial width of image set to 80% of the brower screen -->
+    <img src="{{ url_for('static', filename='sigmoid_plot.png') }}" alt="Sigmoid Plot" style="width: 90%;">
+    
+    <!-- Add a horizontal table showing names for each index of chosen Financial Parameters -->
+    <h3>Financial Parameters:</h3>
+        <div style="overflow-x:auto;">
+            <table border="1">
+                <tbody>
+                <!-- Index Row -->
+                    <tr>
+                        <td><strong>Index</strong></td>
+                        {% for index, name in financial_parameters %}
+                            <td>{{ index }}</td>
+                        {% endfor %}
+                    </tr>
+
+                <!-- Parameter Name Row -->
+                    <tr>
+                        <td><strong>Parameter Name</strong></td>
+                        {% for index, name in financial_parameters %}
+                            <td>{{ name }}</td>
+                        {% endfor %}
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+
 </body>
+
 </html>

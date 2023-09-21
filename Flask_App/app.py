@@ -4,14 +4,10 @@ import numpy as np
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+import matplotlib.gridspec as gridspec
 from keras.models import load_model
-import os
 
-# Specify the path to the directory you want to set as your local working directory
-current_working_directory = 'C:/Users/Xiaofeng/RMIT/Case Studies in Data Science/WIL Project/WIL_Project'
 
-# Change the current working directory to the specified path
-os.chdir(current_working_directory)
 
 app = Flask(__name__)
 
@@ -44,6 +40,7 @@ def predict_risk(input_data):
 def index():
     if request.method == "POST":
         customer_id = int(request.form.get("customer_id"))
+        parameter_range = int(request.form.get("parameter_range")) 
         customer_data = data[data['ID'] == customer_id]
 
         if customer_data.empty:
@@ -66,27 +63,78 @@ def index():
         # Calculate the corresponding y values using the sigmoid function
         y = sigmoid(x)
 
-        # Create a new figure for each prediction
-        plt.figure()
+        # Define the columns you want to plot according to the parameter_range input
+        # make sure the parameter_range input not exceeding the ceilings
+        if parameter_range < 1:
+            parameter_range = 1
+        elif parameter_range > 35:
+            parameter_range = 35 
+        
+        # define the columns_to_plot as a list of parameters' names 
+        columns_to_plot = customer_data.columns[1: parameter_range+1]
 
+        # create financial_paramters list
+        financial_parameters = []
+        for i, col in enumerate(columns_to_plot):
+            financial_parameters.append((i+1, col))
+
+        # Use Matplotlib's GridSpec to create a grid of subplots with custom sizes:
+        fig = plt.figure(figsize=(16, 4))
+        gs = gridspec.GridSpec(1, 2, width_ratios=[1, 2])
+
+        sigmoid_plot = plt.subplot(gs[0])
+        box_plot = plt.subplot(gs[1])
+
+        # First subplot: sigmoid curve
         # Plot the sigmoid curve above 0.5 on the y-axis in red and below 0.5 in green
-        plt.plot(x[y >= 0.5], y[y >= 0.5], color='red', label='Risk')
-        plt.plot(x[y <= 0.5], y[y <= 0.5], color='green', label='Non-Risk')
+        sigmoid_plot.plot(x[y >= 0.5], y[y >= 0.5], color='red', label='Risk')
+        sigmoid_plot.plot(x[y <= 0.5], y[y <= 0.5], color='green', label='Non-Risk')
 
         # Calculate the x-coordinate on the sigmoid curve for the given y-coordinate (predicted_probability)
         x_predicted = np.interp(predicted_probability, y, x)
 
         # Highlight the predicted probability point
-        plt.scatter(x=[x_predicted], y=predicted_probability, color='blue', label='User')
+        sigmoid_plot.scatter(x=[x_predicted], y=predicted_probability, color='blue', label='Customer')   # sychronizing all user tags as 'Customer'
 
         # Label the axes and add a legend
-        plt.xlabel('Input')
-        plt.ylabel('Sigmoid Output')
-        plt.legend()
+        sigmoid_plot.set_xlabel('Input', fontsize=14)
+        sigmoid_plot.set_ylabel('Sigmoid Output', fontsize=14)
+        sigmoid_plot.legend()
 
         # Show the plot
-        plt.title(f'Predicted Probability ({predicted_probability:.2f})')
-        plt.grid(True)
+        sigmoid_plot.set_title(f'Predicted Probability ({predicted_probability:.2f})')
+        sigmoid_plot.grid(True)
+
+        # Second subplot: multi box-plot
+
+        # Customize box and median line appearance
+        box_colors = {'color': '#4B0082'}  # Indigo in hex
+        median_colors = {'color': '#00FF00'}  # Bright Green in hex
+        whisker_colors = {'color': '#4B0082'}  # Indigo in hex
+        cap_colors = {'color': '#4B0082'}  # Indigo in hex
+
+        # draw box plot according to data input
+        boxplots = box_plot.boxplot([data[col] for col in columns_to_plot], labels=range(1, len(columns_to_plot)+1), showfliers=False, patch_artist=True, 
+                                    boxprops=box_colors, medianprops=median_colors, whiskerprops=whisker_colors, capprops=cap_colors)
+
+        # Changing the fill color of the boxes
+        for box in boxplots['boxes']:
+            box.set_facecolor('#D8BFD8')  # Light purple
+
+        # Changing the color and thickness of the median lines
+        for median in boxplots['medians']:
+            median.set(linewidth=4)  #  linewidth=2
+
+
+        # Highlight customer_data on the box-plot
+        for i, col in enumerate(columns_to_plot):
+            box_plot.scatter(x=i + 1, y=customer_data[col].values, color='blue', label='Customer' if i == 0 else "", s=200)
+
+        box_plot.set_title(f'Position of Customer with ID {customer_id} on the Distrubution Board of Financial Parameters')
+        box_plot.set_xlabel('Financial Parameters', fontsize=14)
+        box_plot.set_ylabel('Values', fontsize=14)
+        box_plot.tick_params(axis='y', labelsize=8)
+        box_plot.legend(loc='upper left')
 
         save_path = './Flask_App/static/sigmoid_plot.png'   # change file path to better suit the current working dir
         plt.savefig(save_path)
@@ -96,7 +144,8 @@ def index():
             customer_id=customer_id,
             predicted_risk_value=predicted_risk_percent,
             repayment_probability=repayment_probability,
-            prediction=prediction
+            prediction=prediction,
+            financial_parameters = financial_parameters
         )   # this code passing important parameters to the html template
 
     return render_template("index.html")
