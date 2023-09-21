@@ -6,14 +6,16 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
 from keras.models import load_model
+import seaborn as sns
 
 
 
 app = Flask(__name__)
 
 # Load Customer Data and Risk Prediction Model
-data = pd.read_csv('./Flask_App/Customer_DB.csv')                                       # change file path to better suit the current working dir
-Risk_Prediction_Model = load_model('./Flask_App/model/Risk_Prediction_Model.h5')        # change file path to better suit the current working dir
+data = pd.read_csv('Customer_DB.csv')                        
+Risk_Prediction_Model = load_model('model/Risk_Prediction_Model.h5')     
+df = pd.read_csv('Data_with_prediction_category.csv')
 
 def predict_risk(input_data):
     # Extract the features (excluding the 'ID' column)
@@ -30,9 +32,9 @@ def predict_risk(input_data):
 
     # Make a binary prediction based on the threshold
     if predicted_risk >= threshold:
-        prediction = "Risk"
+        prediction = "High-Risk"
     else:
-        prediction = "Non-Risk"
+        prediction = "Low-Risk"
     
     return predicted_risk, prediction
 
@@ -103,7 +105,7 @@ def index():
 
         # Show the plot
         sigmoid_plot.set_title(f'Predicted Probability ({predicted_probability:.2f})')
-        sigmoid_plot.grid(True)
+        sigmoid_plot.grid(True) 
 
         # Second subplot: multi box-plot
 
@@ -136,8 +138,9 @@ def index():
         box_plot.tick_params(axis='y', labelsize=8)
         box_plot.legend(loc='upper left')
 
-        save_path = './Flask_App/static/sigmoid_plot.png'   # change file path to better suit the current working dir
+        save_path = '.Flask_App/static/sigmoid_plot.png'   # change file path to better suit the current working dir
         plt.savefig(save_path)
+        plt.clf()
 
         return render_template(
             "index.html",
@@ -150,6 +153,50 @@ def index():
 
     return render_template("index.html")
 
+@app.route("/info", methods=["GET", "POST"])
+def two_chart():
+    if request.method == "POST":
+        customer_id = int(request.form.get("cust_id"))
+        customer_data = data[data['ID'] == customer_id]
+
+        if customer_data.empty:
+            return render_template("index.html", error="ID not found")
+
+        #external_risk_estimate
+        comp = df[df['ID'] == customer_id]
+        labels = ['High Risk', 'Low Risk', 'You']
+        sns.kdeplot(df, x = 'ExternalRiskEstimate', hue = 'Category', fill = True)
+        plt.vlines(x = comp['ExternalRiskEstimate'], ymin=0, ymax=2, color = 'red', label = 'You', linestyles=['dashed'])
+        plt.legend(labels = labels)
+        plt.xlabel('Normalised External Risk Estimate Score')
+        plt.title('Comparison of External Risk Estimate')
+        plt.savefig('./static/external_risk_estimate.png')
+        plt.show()
+        plt.clf()
+        labels = ['High Risk', 'Low Risk', 'You']
+        sns.kdeplot(df, x = 'PercentTradesNeverDelq', hue = 'Category', fill = True)
+        plt.vlines(x = comp['PercentTradesNeverDelq'], ymin=0, ymax=14, color = 'red', label = 'You', linestyles=['dashed'])
+        plt.legend(labels = labels)
+        plt.xlabel('Normalised Percent of Trades Never Delinquent')
+        plt.title('Comparison of Trade Delinquency')
+        plt.savefig('./static/percent_delinquency.png')
+        plt.clf()
+        ax = plt.subplot()
+        sns.boxplot(df, x = 'Category', y = 'NumTotalTrades')
+        plt.hlines(y = comp['NumTotalTrades'], xmin=-1, xmax=2, color = 'red', label = 'You', linestyles=['dashed'])
+        plt.legend()
+        ax.set_xticklabels(labels = ["Low Risk", "High Risk"])
+        plt.ylabel("Normalised Number of Trades")
+        plt.title('Comparison of Number of Total Trades Between Risk Groups')
+        plt.savefig('./static/num_trades.png')
+        plt.clf()
+        plt.legend()
+
+        return render_template(
+            "info.html"
+        )   # this code passing important parameters to the html template
+
+    return render_template("info.html")
 
 if __name__ == "__main__":
     app.run(debug=True)
