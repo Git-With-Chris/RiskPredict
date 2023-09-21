@@ -93,10 +93,11 @@ def index():
 
         return render_template(
             "index.html",
+            customer_id=customer_id,
             predicted_risk_value=predicted_risk_percent,
             repayment_probability=repayment_probability,
             prediction=prediction
-        )
+        )   # this code passing important parameters to the html template
 
     return render_template("index.html")
 
