@@ -4,28 +4,44 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Applicant Risk Information</title>
+    <style>
+        body {
+            background-color: palegreen;
+            opacity: 0.9;
+        }
+        h1 {
+            background-color: orange;
+            opacity: 0.9;
+        }
+        </style>
 </head>
 <body></body>
-<h1>Get More Info</h1>
+<h1 style="color: white; font-family: 'Courier New', Courier, monospace;">You and the Prediction Model Features</h1>
     
 <form method="POST">
     <label for="cust_id">Enter Customer ID:</label>
     <input type="number" id="cust_id" name="cust_id" required>
     <button type="submit">See Where You Compare In The Model</button>
-    <p style="color: blue; font-weight: bold;">Notice: customer ID should be an integer between 1 to 9861</p>
+    <p style="color: orange; font-weight: bold; font-family: 'Courier New', Courier, monospace; font-size: small;">Notice: customer ID should be an integer between 1 to 9861</p>
 </form>
 
-<p> The following visuals are based on important factors that have influenced the model's decision.</p>
-<p> You can compare your information to the distribution of attributes separated by the model's prediction </p>
+<p style="color: black; font-family: 'Courier New', Courier, monospace;"> The following visuals are based on important factors that have influenced the model's decision.</p>
+<p style="color: black; font-family: 'Courier New', Courier, monospace;"> You can compare your information to the distribution of attributes separated by the model's prediction.</p>
 
-<img src="{{ url_for('static', filename='external_risk_estimate.png') }}" alt="Sigmoid Plot" style="width: 70%;">
+<img src="{{ url_for('static', filename='external_risk_estimate.png') }}" alt="Sigmoid Plot" style="width: 80%; background-color: palegreen;">
+<p style="color: black; font-family: 'Courier New', Courier, monospace;">This feature compares your credit score to others in the model.</p>
 <div></div>
-<img src="{{ url_for('static', filename='num_trades.png') }}" alt="Sigmoid Plot" style="width: 70%;">
 <div></div>
-<img src="{{ url_for('static', filename='percent_delinquency.png') }}" alt="Sigmoid Plot" style="width: 70%;">
-
+<img src="{{ url_for('static', filename='num_trades.png') }}" alt="Sigmoid Plot" style="width: 80%; background-color: palegreen;">
+<p style="color: black; font-family: 'Courier New', Courier, monospace;">This feature compares how many trades you have executed compared to others.</p>
+<div></div>
+<div></div>
+<img src="{{ url_for('static', filename='percent_delinquency.png') }}" alt="Sigmoid Plot" style="width: 80%; background-color: palegreen;">
+<p style="color: black; font-family: 'Courier New', Courier, monospace;">This feature compares the percentage of delinquent trades you have made.</p>
+<div></div>
+<div></div>
 <div>
-    <a href="/" style="font-size: 24px; color: red;">Go back to the home page.</a>
+    <a href="/" style="font-size: 24px; color: blueviolet;">Go back to the home page.</a>
 </div>
 
 
