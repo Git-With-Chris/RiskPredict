@@ -6,42 +6,42 @@
     <title>Applicant Risk Information</title>
     <style>
         body {
-            background-color: #c2948a;
+            background-color: #3D3983;
             opacity: 0.9;
         }
         h1 {
-            background-color:#28536b;
+            background-color:#F06B80;
             opacity: 0.9;
         }
         </style>
 </head>
 <body></body>
-<h1 style="color: #f6f0ED; font-family: 'Courier New', Courier, monospace;">You and the Prediction Model Features</h1>
+<h1 style="color: #FFFFFF; font-family: 'Courier New', Courier, monospace;">You and the Prediction Model Features</h1>
     
 <form method="POST">
-    <label for="cust_id" style="font-family: 'Courier New', Courier, monospace;">Enter Customer ID:</label>
+    <label for="cust_id" style="color: #FFFFFF; font-family: 'Courier New', Courier, monospace;">Enter Customer ID:</label>
     <input type="number" id="cust_id" name="cust_id" required>
-    <button type="submit" style="font-family: 'Courier New', Courier, monospace;">See Where You Compare In The Model</button>
-    <p style="color: #5d2a42; font-weight: bold; font-family: 'Courier New', Courier, monospace; font-size: small;">Notice: customer ID should be an integer between 1 to 9861</p>
+    <button type="submit" style="color: #FFFFFF; font-family: 'Courier New', Courier, monospace;">See Where You Compare In The Model</button>
+    <p style="color: #F5C968; font-weight: bold; font-family: 'Courier New', Courier, monospace; font-size: small;">Notice: customer ID should be an integer between 1 to 9861</p>
 </form>
 
-<p style="color: black; font-family: 'Courier New', Courier, monospace;"> The following visuals are based on important factors that have influenced the model's decision.</p>
-<p style="color: black; font-family: 'Courier New', Courier, monospace;"> You can compare your information to the distribution of attributes separated by the model's prediction.</p>
+<p style="color: #FFFFFF; font-family: 'Courier New', Courier, monospace;"> The following visuals are based on important factors that have influenced the model's decision.</p>
+<p style="color: #FFFFFF; font-family: 'Courier New', Courier, monospace;"> You can compare your information to the distribution of attributes separated by the model's prediction.</p>
 
-<img src="{{ url_for('static', filename='external_risk_estimate.png') }}" alt="Sigmoid Plot" style="width: 80%; background-color: #bbb193;">
-<p style="color: black; font-family: 'Courier New', Courier, monospace;">This feature compares your credit score to others in the model.</p>
+<img src="{{ url_for('static', filename='external_risk_estimate.png') }}" alt="Sigmoid Plot" style="width: 80%; background-color: #3D3983;">
+<p style="color: #FFFFFF; font-family: 'Courier New', Courier, monospace;">This feature compares your credit score to others in the model.</p>
 <div></div>
 <div></div>
-<img src="{{ url_for('static', filename='num_trades.png') }}" alt="Sigmoid Plot" style="width: 80%; background-color: #bbb193;">
-<p style="color: black; font-family: 'Courier New', Courier, monospace;">This feature compares how many trades you have executed compared to others.</p>
+<img src="{{ url_for('static', filename='num_trades.png') }}" alt="Sigmoid Plot" style="width: 80%; background-color: #3D3983;">
+<p style="color: #FFFFFF; font-family: 'Courier New', Courier, monospace;">This feature compares how many trades you have executed compared to others.</p>
 <div></div>
 <div></div>
-<img src="{{ url_for('static', filename='percent_delinquency.png') }}" alt="Sigmoid Plot" style="width: 80%; background-color: #bbb193;">
-<p style="color: black; font-family: 'Courier New', Courier, monospace;">This feature compares the percentage of delinquent trades you have made.</p>
+<img src="{{ url_for('static', filename='percent_delinquency.png') }}" alt="Sigmoid Plot" style="width: 80%; background-color: #3D3983;">
+<p style="color: #FFFFFF; font-family: 'Courier New', Courier, monospace;">This feature compares the percentage of delinquent trades you have made.</p>
 <div></div>
 <div></div>
 <div>
-    <a href="/" style="font-size: 24px; color: darkcyan ;">Go back to the home page.</a>
+    <a href="/" style="font-size: 24px; color: #F5C968 ;">Go back to the home page.</a>
 </div>
 
 
