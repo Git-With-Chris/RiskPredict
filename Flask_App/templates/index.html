@@ -16,7 +16,7 @@
     </style>
 </head>
 <body>
-    <h1 style="color: #FFFFFF; font-family: 'Courier New', Courier, monospace;">Risk Prediction {% if customer_id %} for Customer ID: {{ customer_id }} {% endif %}</h1> 
+    <h1 style="color: #FFFFFF; font-family: 'Courier New', Courier, monospace; text-align: center;">Risk Prediction {% if customer_id %} for Customer ID: {{ customer_id }} {% endif %}</h1> 
     <form method="POST">
         <label for="customer_id" style="color: #FFFFFF; font-family:'Courier New', Courier, monospace">Enter Customer ID:</label>
         <input type="number" id="customer_id" name="customer_id" required>
@@ -62,7 +62,7 @@
     <p></p>
 
     <div></div>
-    <h1 style="color: #f6f0ed; font-family: 'Courier New', Courier, monospace;">Feature Importance for Attributes Within the Model</h1>
+    <h1 style="color: #f6f0ed; font-family: 'Courier New', Courier, monospace; text-align: center;">Feature Importance for Attributes Within the Model</h1>
     <img src="{{ url_for('static', filename='model_explain.png') }}" alt="Sigmoid Plot" style="background-color: #3D3983;">
     <div></div>
     <p style="color: #FFFFFF; font-family: 'Courier New', Courier, monospace;">The above graph depicts each model. The color indicates whether that attribute positively or negatively affects your</p>

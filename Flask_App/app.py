@@ -1,3 +1,4 @@
+import flask
 from flask import Flask, render_template, request
 import pandas as pd
 import numpy as np
@@ -130,13 +131,13 @@ def index():
 
         # Highlight customer_data on the box-plot
         for i, col in enumerate(columns_to_plot):
-            box_plot.scatter(x=i + 1, y=customer_data[col].values, color='blue', label='Customer' if i == 0 else "", s=200)
+            box_plot.scatter(x=i + 1, y=customer_data[col].values, color='blue', label='Customer' if i == 0 else "", s=200, zorder = 10)
 
         box_plot.set_title(f'Position of Customer with ID {customer_id} on the Distrubution Board of Financial Parameters')
         box_plot.set_xlabel('Financial Parameters', fontsize=14)
         box_plot.set_ylabel('Values', fontsize=14)
         box_plot.tick_params(axis='y', labelsize=8)
-        box_plot.legend(loc='upper left')
+        box_plot.legend(loc='upper right')
 
         save_path = 'static/sigmoid_plot.png'   # change file path to better suit the current working dir
         plt.savefig(save_path)
