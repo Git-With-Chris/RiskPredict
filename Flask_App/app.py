@@ -14,9 +14,9 @@ import seaborn as sns
 app = Flask(__name__)
 
 # Load Customer Data and Risk Prediction Model
-data = pd.read_csv('Customer_DB.csv')                        
-Risk_Prediction_Model = load_model('model/Risk_Prediction_Model.h5')     
-df = pd.read_csv('Data_with_prediction_category.csv')
+data = pd.read_csv('./Flask_App/Customer_DB.csv')                        
+Risk_Prediction_Model = load_model('./Flask_App/model/Risk_Prediction_Model.h5')     
+df = pd.read_csv('./Flask_App/Data_with_prediction_category.csv')
 
 def predict_risk(input_data):
     # Extract the features (excluding the 'ID' column)
@@ -139,7 +139,7 @@ def index():
         box_plot.tick_params(axis='y', labelsize=8)
         box_plot.legend(loc='upper right')
 
-        save_path = 'static/sigmoid_plot.png'   # change file path to better suit the current working dir
+        save_path = './Flask_App/static/sigmoid_plot.png'   # change file path to better suit the current working dir
         plt.savefig(save_path)
         plt.clf()
 
@@ -171,7 +171,7 @@ def two_chart():
         plt.legend(labels = labels)
         plt.xlabel('Normalised External Risk Estimate Score')
         plt.title('Comparison of External Risk Estimate')
-        plt.savefig('static/external_risk_estimate.png')
+        plt.savefig('./Flask_App/static/external_risk_estimate.png')
         plt.show()
         plt.clf()
         labels = ['High Risk', 'Low Risk', 'You']
@@ -180,7 +180,7 @@ def two_chart():
         plt.legend(labels = labels)
         plt.xlabel('Normalised Percent of Trades Never Delinquent')
         plt.title('Comparison of Trade Delinquency')
-        plt.savefig('static/percent_delinquency.png')
+        plt.savefig('./Flask_App/static/percent_delinquency.png')
         plt.clf()
         ax = plt.subplot()
         sns.boxplot(df, x = 'Category', y = 'NumTotalTrades')
@@ -189,7 +189,7 @@ def two_chart():
         ax.set_xticklabels(labels = ["Low Risk", "High Risk"])
         plt.ylabel("Normalised Number of Trades")
         plt.title('Comparison of Number of Total Trades Between Risk Groups')
-        plt.savefig('static/num_trades.png')
+        plt.savefig('./Flask_App/static/num_trades.png')
         plt.clf()
         plt.legend()
 
