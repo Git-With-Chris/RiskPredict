@@ -13,21 +13,21 @@
     <label for="cust_id">Enter Customer ID:</label>
     <input type="number" id="cust_id" name="cust_id" required>
     <button type="submit">See Where You Compare In The Model</button>
-    <p.extra_info>Notice: customer ID should be an integer between 1 to 9861</p>
+    <p class = "extra_info">Notice: customer ID should be an integer between 1 to 9861</p>
 </form>
 
 <p> The following visuals are based on important factors that have influenced the model's decision.</p>
 <p> You can compare your information to the distribution of attributes separated by the model's prediction.</p>
 
-<img class = "small" src="{{ url_for('static', filename='external_risk_estimate.png') }}" alt="Sigmoid Plot">
+<img class = "wide" src="{{ url_for('static', filename='external_risk_estimate.png') }}" alt="Sigmoid Plot">
 <p>This feature compares your credit score to others in the model.</p>
 <div></div>
 <div></div>
-<img class = "small" src="{{ url_for('static', filename='num_trades.png') }}" alt="Sigmoid Plot">
+<img class = "wide" src="{{ url_for('static', filename='num_trades.png') }}" alt="Sigmoid Plot">
 <p>This feature compares how many trades you have executed compared to others.</p>
 <div></div>
 <div></div>
-<img class = "small" src="{{ url_for('static', filename='percent_delinquency.png') }}" alt="Sigmoid Plot">
+<img class = "wide" src="{{ url_for('static', filename='percent_delinquency.png') }}" alt="Sigmoid Plot">
 <p>This feature compares the percentage of delinquent trades you have made.</p>
 <div></div>
 <div></div>
