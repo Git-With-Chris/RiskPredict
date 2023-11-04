@@ -1,42 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel = "stylesheet" type = "text/css" href="static/stylesheet.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Applicant Risk Prediction</title>
-    <style>
-    body {
-        background-color:#3D3983;
-        opacity: 0.9;
-    }
-    h1 {
-        background-color: #F06B80;
-        opacity: 0.9;
-    }
-    </style>
+
 </head>
 <body>
-    <h1 style="color: #FFFFFF; font-family: 'Courier New', Courier, monospace; text-align: center;">Risk Prediction {% if customer_id %} for Customer ID: {{ customer_id }} {% endif %}</h1> 
+    
+    <h1>Risk Prediction {% if customer_id %} for Customer ID: {{ customer_id }} {% endif %}</h1> 
     <form method="POST">
-        <label for="customer_id" style="color: #FFFFFF; font-family:'Courier New', Courier, monospace">Enter Customer ID:</label>
+        <label for="customer_id">Enter Customer ID:</label>
         <input type="number" id="customer_id" name="customer_id" required>
         <button type="submit" style="font-family: 'Courier New', Courier, monospace;">Predict</button>
-        <p style="color: #F5C968; font-weight: bold; font-size: small; font-family: 'Courier New', Courier, monospace;">Notice: customer ID should be an integer between 1 to 9861</p>
+        <p class = "extra_info">Notice: customer ID should be an integer between 1 to 9861</p>
         <label for="parameter_range" style="color: #FFFFFF; font-family: 'Courier New', Courier, monospace;">Enter Financial Parameter Range: from 1 to </label>
         <input type="number" id="parameter_range" name="parameter_range" required>
-        <p style="color: #F5C968 ; font-weight: bold; font-size: small; font-family: 'Courier New', Courier, monospace;">Notice: Financial Parameter Range should be an integer between 1 to 15</p>
+        <p class = "extra_info">Notice: Financial Parameter Range should be an integer between 1 to 15</p>
     </form>
 
-    <h2 style="color: #FFFFFF; font-family: 'Courier New', Courier, monospace;">Prediction Results:</h2>
-    <p style="color: #FFFFFF; font-family: 'Courier New', Courier, monospace;">Risk associated with applicant (Percent): {{ predicted_risk_value }}%</p>
-    <p style="color: #FFFFFF; font-family: 'Courier New', Courier, monospace;">Chance of successful repayment (Percent): {{ repayment_probability }}%</p>
-    <p style="color: #FFFFFF; font-family: 'Courier New', Courier, monospace;">Classification: {{ prediction }}</p>
+    <h2 >Prediction Results:</h2>
+    <p>Risk associated with applicant (Percent): {{ predicted_risk_value }}%</p>
+    <p>Chance of successful repayment (Percent): {{ repayment_probability }}%</p>
+    <p>Classification: {{ prediction }}</p>
 
     <!-- Add an <img> tag to display the saved plot image, the initial width of image set to 80% of the brower screen -->
-    <img src="{{ url_for('static', filename='sigmoid_plot.png') }}" alt="Sigmoid Plot" style="width: 90%; background-color:#bbb193;">
+    <img class = "wide" src="{{ url_for('static', filename='sigmoid_plot.png') }}" alt="Sigmoid Plot">
     
     <!-- Add a horizontal table showing names for each index of chosen Financial Parameters -->
-    <h3 style="color: #FFFFFF; font-family: 'Courier New', Courier, monospace;">Financial Parameters:</h3>
+    <h3>Financial Parameters:</h3>
         <div style="color: #FFFFFF; overflow-x:auto; font-family: 'Courier New', Courier, monospace;">
             <table border="1">
                 <tbody>
@@ -62,14 +55,14 @@
     <p></p>
 
     <div></div>
-    <h1 style="color: #f6f0ed; font-family: 'Courier New', Courier, monospace; text-align: center;">Feature Importance for Attributes Within the Model</h1>
-    <img src="{{ url_for('static', filename='model_explain.png') }}" alt="Sigmoid Plot" style="background-color: #3D3983;">
+    <h1 class = "header">Feature Importance for Attributes Within the Model</h1>
+    <img class = "small" src="{{ url_for('static', filename='model_explain.png') }}" alt="Sigmoid Plot">
     <div></div>
-    <p style="color: #FFFFFF; font-family: 'Courier New', Courier, monospace;">The above graph depicts each model. The color indicates whether that attribute positively or negatively affects your</p>
-    <p style="color: #FFFFFF; font-family: 'Courier New', Courier, monospace;">risk score. Red values indicate a prediction of higher risk and blue values are lower risk.</p>
+    <p>The above graph depicts each model. The color indicates whether that attribute positively or negatively affects your</p>
+    <p>risk score. Red values indicate a prediction of higher risk and blue values are lower risk.</p>
     <div></div>
     <div></div>
-        <a href="/info" style="font-size: 24px; color:#F5C968; font-family: 'Courier New', Courier, monospace;">For more information, click here.</a>
+        <a href="/info">For more information, click here.</a>
     
         
 </body>
