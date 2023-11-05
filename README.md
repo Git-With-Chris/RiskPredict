@@ -37,7 +37,7 @@ For a preview of the web pages created for our project, you can explore the "web
 
 If you have any questions, feedback, or would like to learn more about our project, please feel free to reach out to our team members:
 
-- [Chris John](https://www.linkedin.com/in/chrisjohn11/))
+- [Chris John](https://www.linkedin.com/in/chrisjohn11/)
 - [Sam Mainwood](https://www.linkedin.com/in/sammainwood)
 - Other group member LinkedIn profiles available as they are added to this ReadMe
 
