@@ -29,9 +29,63 @@ To experience our project, you can follow these steps:
 
 Additionally, you can find the datasets used for model training and Jupyter notebooks in the "Resources" directory, which provides further insight into our data cleaning and model development processes.
 
-## Sample Web Pages
+## Sample Web Page
 
-For a preview of the web pages created for our project, you can explore the "webpage_samples" directory.
+For a detaied preview of the web pages created for our project, you can explore the "webpage_samples" directory.
+
+![Landing Page](webpage_samples/LandingPagePreData.png)
+![Details Page](webpage_samples/InfoPage.png)
+
+## Project Structure
+
+```plaintext
+.
+├── Flask_App
+│   ├── Customer_DB.csv                      
+│   ├── Data_with_prediction_category.csv
+│   ├── app.py
+│   ├── model
+│   │   └── Risk_Prediction_Model.h5
+│   ├── static                             # Plots
+│   │   ├── external_risk_estimate.png
+│   │   ├── model_explain.png
+│   │   ├── num_trades.png
+│   │   ├── percent_delinquency.png
+│   │   ├── sigmoid_plot.png
+│   │   └── stylesheet.css
+│   └── templates
+│       ├── index.html
+│       └── info.html
+├── MVP
+│   ├── Min_Viable_Prod.ipynb              # Minimum Viable Product
+│   ├── normalised.csv
+│   ├── scaled.csv
+│   └── target.csv
+├── README.md
+├── Resources
+│   ├── Data_with_prediction_category.csv
+│   ├── binary_classification.ipynb        # EDA Notebook
+│   ├── cleaned.csv
+│   ├── dash.ipynb                         # Dashboard using Dash
+│   ├── graph_make.ipynb
+│   ├── heloc_data_dictionary-2.xlsx
+│   ├── heloc_dataset_v1.csv
+│   ├── minimal_dataset_notebook.ipynb     # EDA Notebook
+│   ├── normalised.csv
+│   ├── num_trades.png
+│   ├── percent_delinquency.png
+│   ├── scaled.csv
+│   └── target.csv
+└── webpage_samples                        # Webpage Sample Images
+    ├── FeatureImportance.png
+    ├── InfoPage.png
+    ├── InfoPageCont.png
+    ├── LandingPagePreData.png
+    └── LandingPageWithData.png
+
+8 directories, 35 files
+
+```
 
 ## Contact
 
