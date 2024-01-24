@@ -1,4 +1,4 @@
-# Work Integrated Learning Project
+# Risk Predict 
 ## Explainability in Finance
 
 Welcome to our Work Integrated Learning (WIL) project - "Explainability in Finance." In this collaborative project, we tackled a challenging data science task, aiming to create a viable Data Science product for the finance sector. We chose to work on this project using the dataset from the ["Explainable Machine Learning Challenge"](https://community.fico.com/s/explainable-machine-learning-challenge) provided by FICO.
