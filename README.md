@@ -93,6 +93,7 @@ If you have any questions, feedback, or would like to learn more about our proje
 
 - [Chris John](https://www.linkedin.com/in/chrisjohn11/)
 - [Sam Mainwood](https://www.linkedin.com/in/sammainwood)
+- [Junwon Lee](https://github.com/Data-JohnLee)
 - Other group member LinkedIn profiles available as they are added to this ReadMe
 
 Thank you for your interest in our "Explainability in Finance" project. We look forward to sharing our work with you and continuing our exploration of data-driven solutions in the finance industry.
